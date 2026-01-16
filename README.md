@@ -14,4 +14,4 @@ MENTOR - NEELA SANTOSHA
 
 OUTPUT - 
 
-https://github.com/rudraprasad12/CHAT-APPLICATION-1/issues/new
+<img width="1920" height="978" alt="ss chat application 1" src="https://github.com/user-attachments/assets/7464e5e5-f3c3-4425-a6f5-3c381d855fa8" />
