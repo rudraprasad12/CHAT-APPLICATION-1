@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Real-Time Chat App</title>
+
+
+<style>
+    body {
+        background-image: https://www.pixelstalk.net/wp-content/uploads/2016/08/Photos-Background-Images-In-HD.png;
+        font-family: Arial, sans-serif;
+        background: #ddd;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    .chat-box {
+        width: 380px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .chat-header {
+        padding: 12px;
+        background: #007bff;
+        color: white;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .messages {
+        flex: 1;
+        padding: 10px;
+        overflow-y: auto;
+        list-style: none;
+        margin: 0;
+    }
+
+    .messages li {
+        padding: 6px 10px;
+        margin-bottom: 6px;
+        background: #e9ecef;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    .chat-form {
+        display: flex;
+        border-top: 1px solid #ddd;
+    }
+
+    .chat-form input {
+        flex: 1;
+        padding: 10px;
+        border: none;
+        outline: none;
+        font-size: 14px;
+    }
+
+    .chat-form button {
+        padding: 10px 15px;
+        border: none;
+        background: #007bff;
+        color: white;
+        cursor: pointer;
+    }
+
+    .chat-form button:hover {
+        background: #0056b3;
+
+    }
+</style>
+</head>
+
+<body>
+
+<div class="chat-box">
+    <div class="chat-header">Real-Time Chat</div>
+
+    <ul class="messages" id="messages"></ul>
+
+    <form class="chat-form" id="chatForm">
+        <input type="text" id="messageInput" placeholder="Type a message..." autocomplete="off">
+        <button type="submit">Send</button>
+    </form>
+</div>
+
+<!-- Socket.IO client -->
+<script src="/socket.io/socket.io.js"></script>
+
+<script>
+    const socket = io(); // connect to server
+
+    const form = document.getElementById("chatForm");
+    const input = document.getElementById("messageInput");
+    const messages = document.getElementById("messages");
+
+    form.addEventListener("submit", function(e) {
+        e.preventDefault();
+
+        if (input.value.trim() !== "") {
+            socket.emit("chatMessage", input.value);
+            input.value = "";
+        }
+    });
+
+    socket.on("chatMessage", function(msg) {
+        const li = document.createElement("li");
+        li.textContent = msg;
+        messages.appendChild(li);
+        messages.scrollTop = messages.scrollHeight;
+    });
+</script>
+
+</body>
+</html>
